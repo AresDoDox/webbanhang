@@ -20,17 +20,60 @@
 
             <div class="space-x-4">
 
-                <a href="?route=/">
-                    Home
-                </a>
+                <?php if (isset($_SESSION['user'])): ?>
 
-                <a href="?route=login">
-                    Login
-                </a>
+                    <span>
 
-                <a href="?route=register">
-                    Register
-                </a>
+                        Hello,
+
+                        <?= htmlspecialchars(
+                            $_SESSION['user']['name']
+                        ) ?>
+
+                    </span>
+
+                    <span> | </span>
+
+                    <a href="?route=dashboard">
+
+                        Dashboard
+
+                    </a>
+
+                    <?php if (
+                        $_SESSION['user']['role']
+                        === 'admin'
+                    ): ?>
+
+                        <a href="?route=admin/dashboard">
+
+                            Admin Panel
+
+                        </a>
+
+                    <?php endif; ?>
+
+                    <a href="?route=logout">
+
+                        Logout
+
+                    </a>
+
+                <?php else: ?>
+
+                    <a href="?route=login">
+
+                        Login
+
+                    </a>
+
+                    <a href="?route=register">
+
+                        Register
+
+                    </a>
+
+                <?php endif; ?>
 
             </div>
 

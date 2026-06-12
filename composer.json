@@ -1,0 +1,14 @@
+{
+    "name": "thaidtc/webbanhang",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "thaidtc"
+        }
+    ],
+    "require": {}
+}
