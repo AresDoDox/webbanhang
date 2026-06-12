@@ -1,7 +1,11 @@
 <?php
 
-class HomeController {
-    public function index() {
-        require_once "../app/Views/home.php";
+namespace App\Controllers;
+
+class HomeController extends Controller
+{
+    public function index()
+    {
+        $this->view('home');
     }
 }
