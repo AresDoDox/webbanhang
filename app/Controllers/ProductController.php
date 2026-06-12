@@ -4,9 +4,10 @@ namespace App\Controllers;
 
 use App\Models\Product;
 use App\Middleware\AdminMiddleware;
-use App\Services\UploadService;
 use App\Helpers\Csrf;
 use App\Helpers\Flash;
+use App\Services\ProductService;
+use App\Helpers\Request;
 
 class ProductController extends Controller
 {
@@ -34,6 +35,26 @@ class ProductController extends Controller
         );
     }
 
+    public function show()
+    {
+        AdminMiddleware::handle();
+
+        $id = (int) Request::get('id');
+
+        if (!$id) {
+            die('Product ID is required');
+        }
+
+        $productModel = new Product();
+
+        $product = $productModel->findOrFail($id);
+
+        $this->view(
+            'admin/products/show',
+            compact('product')
+        );
+    }
+
     public function create()
     {
         AdminMiddleware::handle();
@@ -48,34 +69,19 @@ class ProductController extends Controller
         AdminMiddleware::handle();
 
         if (
-            !Csrf::verify(
-                $_POST['csrf'] ?? ''
-            )
+            !Csrf::verify($_POST['csrf'] ?? '')
         ) {
             die('Invalid CSRF');
         }
 
-        $image =
-            UploadService::image(
-                $_FILES['image']
-            );
-
-        $product = new Product();
-
-        $product->create([
-            'name' => $_POST['name'],
-            'description' => $_POST['description'],
-            'price' => $_POST['price'],
-            'image' => $image
-        ]);
+        $productService = new ProductService();
+        $productService->create($_POST, $_FILES['image']);
 
         Flash::set(
             'success',
             'Product created'
         );
 
-        header(
-            'Location:?route=admin/products'
-        );
+        $this->redirect('?route=admin/products');
     }
 }

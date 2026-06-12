@@ -36,7 +36,7 @@ class AuthController extends Controller
                 'Tên không được để trống'
             );
 
-            header('Location: ?route=register');
+            $this->redirect('?route=register');
             exit;
         }
 
@@ -47,7 +47,7 @@ class AuthController extends Controller
                 'Email không hợp lệ'
             );
 
-            header('Location: ?route=register');
+            $this->redirect('?route=register');
             exit;
         }
 
@@ -58,7 +58,7 @@ class AuthController extends Controller
                 'Mật khẩu tối thiểu 6 ký tự'
             );
 
-            header('Location: ?route=register');
+            $this->redirect('?route=register');
             exit;
         }
 
@@ -68,7 +68,7 @@ class AuthController extends Controller
                 'Email đã tồn tại'
             );
 
-            header('Location:?route=register');
+            $this->redirect('?route=register');
             exit;
         }
 
@@ -77,7 +77,8 @@ class AuthController extends Controller
                 'success',
                 'Đăng ký thành công. Vui lòng đăng nhập.'
             );
-            header("Location: ?route=login");
+
+            $this->redirect('?route=login');
         } else {
             echo "Đăng ký thất bại!";
         }
@@ -100,26 +101,24 @@ class AuthController extends Controller
             if (
                 $foundUser['role'] === 'admin'
             ) {
-                header(
-                    'Location:?route=admin/dashboard'
-                );
+                $this->redirect('?route=admin/dashboard');
             } else {
-                header(
-                    'Location:?route=dashboard'
-                );
+                $this->redirect('?route=dashboard');
             }
         } else {
             Flash::set(
                 'error',
                 'Email hoặc mật khẩu không đúng'
             );
-            header("Location: ?route=login");
+
+            $this->redirect('?route=login');
         }
     }
 
     public function logout()
     {
         session_destroy();
-        header("Location: ?route=login");
+
+        $this->redirect('?route=login');
     }
 }

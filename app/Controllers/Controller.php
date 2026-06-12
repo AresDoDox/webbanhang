@@ -13,4 +13,11 @@ class Controller
         require
             "../app/Views/$path.php";
     }
+
+    protected function redirect(
+        string $url
+    ): void {
+        header("Location: $url");
+        exit;
+    }
 }

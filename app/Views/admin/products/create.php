@@ -1,5 +1,9 @@
 <?php require '../app/Views/layouts/header.php'; ?>
 
+<?php
+
+use App\Helpers\Csrf; ?>
+
 <div class="max-w-2xl mx-auto bg-white p-6 rounded shadow">
 
     <h1 class="text-2xl font-bold mb-6">
@@ -7,8 +11,8 @@
     </h1>
 
     <form action="?route=admin/products/store" method="POST" enctype="multipart/form-data">
-
         <!-- CSRF -->
+        <input type="hidden" name="csrf" value="<?= Csrf::token() ?>">
 
         <div class="mb-4">
 

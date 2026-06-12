@@ -53,6 +53,11 @@ switch ($route) {
         $productController->index();
         break;
 
+    case 'admin/products/show':
+        $productController = new ProductController();
+        $productController->show();
+        break;
+
     case 'admin/products/create':
         $productController = new ProductController();
         $productController->create();
