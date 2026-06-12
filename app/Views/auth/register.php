@@ -11,15 +11,7 @@ use App\Helpers\Csrf; ?>
     </h1>
 
     <form method="POST" action="?route=register-post">
-        <?php if ($message = Flash::get('error')): ?>
-
-            <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
-
-                <?= htmlspecialchars($message) ?>
-
-            </div>
-
-        <?php endif; ?>
+        <?php require '../app/Views/layouts/flash.php'; ?>
         <input type="hidden" name="csrf" value="<?= Csrf::token() ?>">
 
         <input type="text" name="name" placeholder="Name" class="border w-full p-2 mb-3" required>

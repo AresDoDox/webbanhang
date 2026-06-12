@@ -30,6 +30,7 @@
             <th>Name</th>
             <th>Price</th>
             <th>Image</th>
+            <th>Action</th>
         </tr>
     </thead>
 
@@ -54,7 +55,13 @@
                 </td>
 
                 <td>
-                    <img src="<?= __DIR__ . '/storage/uploads/' . $product['image'] ?>" class="w-20">
+                    <img src="/webbanhang/storage/uploads/<?= $product['image'] ?>" class="w-20">
+                </td>
+
+                <td>
+                    <a href="?route=admin/products/show&id=<?= $product['id'] ?>" class="text-blue-500">
+                        View
+                    </a>
                 </td>
             </tr>
 

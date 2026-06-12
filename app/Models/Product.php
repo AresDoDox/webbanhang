@@ -14,7 +14,10 @@ class Product extends Model
 
         $stmt = $this->db->prepare($query);
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if ($stmt->execute()) {
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        return [];
     }
 
     public function create(array $request)
@@ -51,6 +54,17 @@ class Product extends Model
         ]);
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function findOrFail(int $id): array
+    {
+        $product = $this->find($id);
+
+        if (!$product) {
+            throw new \Exception('Product not found');
+        }
+
+        return $product;
     }
 
     public function search(
