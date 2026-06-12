@@ -14,11 +14,13 @@
 
     </div>
 
-    <div class="bg-white p-6 rounded shadow">
+    <a href="?route=admin/products">
+        <div class="bg-white p-6 rounded shadow">
 
-        Products
+            Products
 
-    </div>
+        </div>
+    </a>
 
     <div class="bg-white p-6 rounded shadow">
 
