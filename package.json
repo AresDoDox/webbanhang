@@ -1,0 +1,27 @@
+{
+  "name": "webbanhang",
+  "version": "1.0.0",
+  "description": "Chúng ta sẽ làm theo các giai đoạn:",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-css": "tailwindcss -i ./resources/css/app.css -o ./public/assets/css/app.css",
+    "watch-css": "tailwindcss -i ./resources/css/app.css -o ./public/assets/css/app.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AresDoDox/webbanhang.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/AresDoDox/webbanhang/issues"
+  },
+  "homepage": "https://github.com/AresDoDox/webbanhang#readme",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.3.0",
+    "tailwindcss": "^4.3.0"
+  }
+}
