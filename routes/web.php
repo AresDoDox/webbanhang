@@ -4,6 +4,7 @@ use App\Controllers\AuthController;
 use App\Controllers\HomeController;
 use App\Controllers\UserController;
 use App\Controllers\AdminController;
+use App\Controllers\ProductController;
 
 $route = $_GET['route'] ?? '/';
 switch ($route) {
@@ -45,6 +46,21 @@ switch ($route) {
     case 'admin/dashboard':
         $adminController = new AdminController();
         $adminController->dashboard();
+        break;
+
+    case 'admin/products':
+        $productController = new ProductController();
+        $productController->index();
+        break;
+
+    case 'admin/products/create':
+        $productController = new ProductController();
+        $productController->create();
+        break;
+
+    case 'admin/products/store':
+        $productController = new ProductController();
+        $productController->store();
         break;
 
     default:
