@@ -16,10 +16,8 @@ class ProductService
 
     public function getAll()
     {
-        $keyword =
-            $_GET['keyword'] ?? '';
-
-        $page = (int) ($_GET['page'] ?? 1);
+        $keyword = Request::get('keyword', '');
+        $page = (int) Request::get('page', 1);
         $limit   = 10;
 
         if ($keyword) {
