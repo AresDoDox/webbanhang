@@ -214,9 +214,6 @@
   .m-2 {
     margin: calc(var(--spacing) * 2);
   }
-  .m-auto {
-    margin: auto;
-  }
   .mx-auto {
     margin-inline: auto;
   }
@@ -229,9 +226,6 @@
   .mt-3 {
     margin-top: calc(var(--spacing) * 3);
   }
-  .mr-auto {
-    margin-right: auto;
-  }
   .mb-3 {
     margin-bottom: calc(var(--spacing) * 3);
   }
@@ -240,9 +234,6 @@
   }
   .mb-6 {
     margin-bottom: calc(var(--spacing) * 6);
-  }
-  .ml-auto {
-    margin-left: auto;
   }
   .flex {
     display: flex;
@@ -258,9 +249,6 @@
   }
   .h-auto {
     height: auto;
-  }
-  .min-h-9\.5 {
-    min-height: calc(var(--spacing) * 9.5);
   }
   .min-h-screen {
     min-height: 100vh;
@@ -282,9 +270,6 @@
   }
   .min-w-9 {
     min-width: calc(var(--spacing) * 9);
-  }
-  .min-w-9\.5 {
-    min-width: calc(var(--spacing) * 9.5);
   }
   .grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -447,30 +432,10 @@
       --tw-ring-color: var(--color-blue-500);
     }
   }
-  .focus\:outline-hidden {
-    &:focus {
-      --tw-outline-style: none;
-      outline-style: none;
-      @media (forced-colors: active) {
-        outline: 2px solid transparent;
-        outline-offset: 2px;
-      }
-    }
-  }
   .focus\:outline-none {
     &:focus {
       --tw-outline-style: none;
       outline-style: none;
-    }
-  }
-  .disabled\:pointer-events-none {
-    &:disabled {
-      pointer-events: none;
-    }
-  }
-  .disabled\:opacity-50 {
-    &:disabled {
-      opacity: 50%;
     }
   }
 }

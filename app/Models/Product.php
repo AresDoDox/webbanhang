@@ -86,7 +86,7 @@ class Product extends Model
             'data'       => $data,
             'total'      => $data ? count($data) : 0,
             'page'       => $data ? 1 : 0,
-            'limit'      => $data ? count($data) : 0,,
+            'limit'      => $data ? count($data) : 0,
             'totalPages' => $data ? 1 : 0,
         ];
     }
