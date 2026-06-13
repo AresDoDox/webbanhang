@@ -11,6 +11,7 @@ use App\Helpers\Csrf; ?>
     </h1>
 
     <form action="?route=admin/products/store" method="POST" enctype="multipart/form-data">
+        <?php require '../app/Views/layouts/flash.php'; ?>
         <!-- CSRF -->
         <input type="hidden" name="csrf" value="<?= Csrf::token() ?>">
 

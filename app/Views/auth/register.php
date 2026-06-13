@@ -1,7 +1,6 @@
 <?php require '../app/Views/layouts/header.php'; ?>
 <?php
 
-use App\Helpers\Flash;
 use App\Helpers\Csrf; ?>
 
 <div class="max-w-lg mx-auto bg-white p-8 rounded shadow">

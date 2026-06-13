@@ -6,6 +6,7 @@ use App\Middleware\AdminMiddleware;
 use App\Helpers\Csrf;
 use App\Helpers\Flash;
 use App\Services\ProductService;
+use App\Validators\ProductValidator;
 
 class ProductController extends Controller
 {
@@ -54,14 +55,21 @@ class ProductController extends Controller
             die('Invalid CSRF');
         }
 
-        $productService = new ProductService();
-        $created = $productService->create($_POST, $_FILES['image']);
+        $errors = ProductValidator::validate($_POST);
 
-        if ($created) {
-            Flash::set('success', 'Product created');
-        } else {
-            Flash::set('error', 'Failed to create product');
+        if (!empty($errors)) {
+            Flash::set('error', $errors[0]);
+            return $this->redirect('?route=admin/products/create');
         }
+
+        $productService = new ProductService();
+        $productService->create($_POST, $_FILES['image']);
+
+        // if ($created) {
+        //     Flash::set('success', 'Product created');
+        // } else {
+        //     Flash::set('error', 'Failed to create product');
+        // }
 
         $this->redirect('?route=admin/products');
     }
@@ -87,6 +95,13 @@ class ProductController extends Controller
             !Csrf::verify($_POST['csrf'] ?? '')
         ) {
             die('Invalid CSRF');
+        }
+
+        $errors = ProductValidator::validate($_POST);
+
+        if (!empty($errors)) {
+            Flash::set('error', $errors[0]);
+            return $this->redirect('?route=admin/products/create');
         }
 
         $productService = new ProductService();
