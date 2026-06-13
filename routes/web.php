@@ -68,6 +68,16 @@ switch ($route) {
         $productController->store();
         break;
 
+    case 'admin/products/edit':
+        $productController = new ProductController();
+        $productController->edit();
+        break;
+
+    case 'admin/products/update':
+        $productController = new ProductController();
+        $productController->update();
+        break;
+
     default:
         echo "404 Not Found";
 }

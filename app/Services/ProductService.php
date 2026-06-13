@@ -7,20 +7,25 @@ use App\Helpers\Request;
 
 class ProductService
 {
+    private Product $productModel;
+
+    public function __construct()
+    {
+        $this->productModel = new Product();
+    }
+
     public function getAll()
     {
-        $product = new Product();
-
         $keyword =
             $_GET['keyword'] ?? '';
 
         if ($keyword) {
             $products =
-                $product->search(
+                $this->productModel->search(
                     $keyword
                 );
         } else {
-            $products = $product->getAll();
+            $products = $this->productModel->getAll();
         }
 
         return $products;
@@ -34,11 +39,7 @@ class ProductService
             die('Product ID is required');
         }
 
-        $productModel = new Product();
-
-        $product = $productModel->findOrFail($id);
-
-        var_dump($product);
+        $product = $this->productModel->findOrFail($id);
 
         return $product;
     }
@@ -52,14 +53,42 @@ class ProductService
                 $file
             );
 
-        $product =
-            new Product();
-
-        return $product->create([
+        return $this->productModel->create([
             'name' => $data['name'],
             'description' => $data['description'],
             'price' => $data['price'],
             'image' => $image
         ]);
+    }
+
+    public function update(
+        array $data,
+        array $file
+    ) {
+        $id = (int) Request::post('id');
+
+        if (!$id) {
+            die('Product ID is required');
+        }
+
+        $product = $this->productModel->findOrFail($id);
+
+        $image = $product['image'];
+
+        if (!empty($file['name'])) {
+            $image =
+                UploadService::image(
+                    $file
+                );
+        }
+
+        $updateData = [
+            'name'        => $data['name'] ?? '',
+            'description' => $data['description'] ?? '',
+            'price'       => $data['price'] ?? 0,
+            'image'       => $image,
+        ];
+
+        return $this->productModel->update($id, $updateData);
     }
 }

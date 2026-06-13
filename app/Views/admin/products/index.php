@@ -62,6 +62,9 @@
                     <a href="?route=admin/products/show&id=<?= $product['id'] ?>" class="text-blue-500">
                         View
                     </a>
+                    <a href="?route=admin/products/edit&id=<?= $product['id'] ?>" class="text-blue-500">
+                        Edit
+                    </a>
                 </td>
             </tr>
 

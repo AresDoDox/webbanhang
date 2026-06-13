@@ -82,4 +82,23 @@ class Product extends Model
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function update(int $id, array $request)
+    {
+        $query = "UPDATE products
+            SET
+            name = :name,
+            description = :description,
+            price = :price,
+            image = :image
+        WHERE id = :id
+        ";
+
+        $stmt = $this->db->prepare($query);
+
+        return $stmt->execute([
+            ...$request,
+            'id' => $id
+        ]);
+    }
 }
