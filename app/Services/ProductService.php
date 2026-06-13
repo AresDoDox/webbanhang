@@ -51,12 +51,14 @@ class ProductService
                 $file
             );
 
-        return $this->productModel->create([
+        $this->productModel->create([
             'name' => $data['name'],
             'description' => $data['description'],
             'price' => $data['price'],
             'image' => $image
         ]);
+
+        return;
     }
 
     public function update(
