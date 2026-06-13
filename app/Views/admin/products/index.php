@@ -1,5 +1,16 @@
 <?php require '../app/Views/layouts/header.php'; ?>
 
+<?php
+// Ensure $result is defined to avoid undefined variable errors in the view
+if (!isset($result) || !is_array($result)) {
+    $result = [
+        'data' => [],
+        'totalPages' => 0,
+        'keyword' => '',
+    ];
+}
+?>
+
 <div class="flex justify-between mb-6">
 
     <h1 class="text-3xl font-bold">
@@ -7,9 +18,7 @@
     </h1>
 
     <a href="?route=admin/products/create" class="bg-indigo-600 text-white px-4 py-2 rounded">
-
         Add Product
-
     </a>
 
 </div>
@@ -36,7 +45,7 @@
 
     <tbody>
 
-        <?php foreach ($products ?? [] as $product): ?>
+        <?php foreach ($result['data'] ?? [] as $product): ?>
 
         <tr>
 
@@ -45,9 +54,7 @@
             </td>
 
             <td>
-                <?= htmlspecialchars(
-                        $product['name']
-                    ) ?>
+                <?= htmlspecialchars($product['name']) ?>
             </td>
 
             <td>
@@ -72,9 +79,22 @@
         </tr>
 
         <?php endforeach; ?>
-
     </tbody>
-
 </table>
+
+<div class="flex justify-center mt-2">
+    <nav class="flex items-center gap-x-1" aria-label="Pagination">
+        <div class="flex items-center gap-x-1">
+            <?php if ($result['totalPages'] > 1): ?>
+            <?php for ($i = 1; $i <= $result['totalPages']; $i++): ?>
+            <a href="?route=admin/products&page=<?= $i ?>&keyword=<?= urlencode($result['keyword']) ?>"
+                class="flex items-center justify-center min-w-9 h-9 px-3 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 <?= ($i == $result['page']) ? 'bg-blue-600 text-white' : 'bg-white' ?>">
+                <?= $i ?>
+            </a>
+            <?php endfor; ?>
+            <?php endif; ?>
+        </div>
+    </nav>
+</div>
 
 <?php require '../app/Views/layouts/footer.php'; ?>

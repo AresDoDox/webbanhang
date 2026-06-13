@@ -14,11 +14,11 @@ class ProductController extends Controller
         AdminMiddleware::handle();
 
         $productService = new ProductService();
-        $products = $productService->getAll();
+        $result = $productService->getAll();
 
         $this->view(
             'admin/products/index',
-            compact('products')
+            compact('result')
         );
     }
 

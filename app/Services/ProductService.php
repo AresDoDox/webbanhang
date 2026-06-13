@@ -19,16 +19,16 @@ class ProductService
         $keyword =
             $_GET['keyword'] ?? '';
 
+        $page = (int) ($_GET['page'] ?? 1);
+        $limit   = 10;
+
         if ($keyword) {
-            $products =
-                $this->productModel->search(
-                    $keyword
-                );
+            $result = $this->productModel->searchPaginate($keyword, $page, $limit);
         } else {
-            $products = $this->productModel->getAll();
+            $result = $this->productModel->paginate($page, $limit);
         }
 
-        return $products;
+        return $result;
     }
 
     public function show()
