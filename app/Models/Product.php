@@ -80,7 +80,15 @@ class Product extends Model
             'keyword' => "%$keyword%"
         ]);
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return [
+            'data'       => $data,
+            'total'      => $data ? count($data) : 0,
+            'page'       => $data ? 1 : 0,
+            'limit'      => $data ? count($data) : 0,,
+            'totalPages' => $data ? 1 : 0,
+        ];
     }
 
     public function update(int $id, array $request)
@@ -111,5 +119,68 @@ class Product extends Model
         return $stmt->execute([
             'id' => $id
         ]);
+    }
+
+    public function paginate(
+        int $page,
+        int $limit = 10
+    ) {
+        $offset = ($page - 1) * $limit;
+
+        $query = "SELECT * FROM products
+        ORDER BY id DESC
+        LIMIT :limit
+        OFFSET :offset
+        ";
+
+        $stmt = $this->db->prepare($query);
+
+        $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, \PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $total = $this->db->query("SELECT COUNT(*) FROM products")->fetchColumn();
+
+        return [
+            'data'       => $data,
+            'total'      => $total,
+            'page'       => $page,
+            'limit'      => $limit,
+            'totalPages' => ceil($total / $limit)
+        ];
+    }
+
+    public function searchPaginate(
+        string $keyword,
+        int $page,
+        int $limit = 10
+    ) {
+        $offset = ($page - 1) * $limit;
+
+        $countQuery = "SELECT COUNT(*) as total FROM products WHERE name LIKE :keyword OR description LIKE :keyword";
+        $countStmt = $this->db->prepare($countQuery);
+        $countStmt->execute(['keyword' => "%$keyword%"]);
+        $total = $countStmt->fetch()['total'];
+
+        $query = "SELECT * FROM products 
+            WHERE name LIKE :keyword OR description LIKE :keyword
+            LIMIT :limit OFFSET :offset";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':keyword', "%$keyword%");
+        $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, \PDO::PARAM_INT);
+        $stmt->execute();
+        $data = $stmt->fetchAll();
+
+        return [
+            'data'       => $data,
+            'total'      => $total,
+            'page'       => $page,
+            'limit'      => $limit,
+            'totalPages' => ceil($total / $limit)
+        ];
     }
 }
