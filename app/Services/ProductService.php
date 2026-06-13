@@ -91,4 +91,15 @@ class ProductService
 
         return $this->productModel->update($id, $updateData);
     }
+
+    public function delete()
+    {
+        $id = (int) Request::get('id');
+
+        if (!$id) {
+            die('Product ID is required');
+        }
+
+        return $this->productModel->delete($id);
+    }
 }

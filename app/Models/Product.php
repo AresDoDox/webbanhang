@@ -101,4 +101,15 @@ class Product extends Model
             'id' => $id
         ]);
     }
+
+    public function delete(int $id)
+    {
+        $query = "DELETE FROM products WHERE id = :id";
+
+        $stmt = $this->db->prepare($query);
+
+        return $stmt->execute([
+            'id' => $id
+        ]);
+    }
 }

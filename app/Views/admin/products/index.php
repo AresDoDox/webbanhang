@@ -38,35 +38,38 @@
 
         <?php foreach ($products ?? [] as $product): ?>
 
-            <tr>
+        <tr>
 
-                <td>
-                    <?= $product['id'] ?>
-                </td>
+            <td>
+                <?= $product['id'] ?>
+            </td>
 
-                <td>
-                    <?= htmlspecialchars(
+            <td>
+                <?= htmlspecialchars(
                         $product['name']
                     ) ?>
-                </td>
+            </td>
 
-                <td>
-                    <?= $product['price'] ?>
-                </td>
+            <td>
+                <?= $product['price'] ?>
+            </td>
 
-                <td>
-                    <img src="/webbanhang/storage/uploads/<?= $product['image'] ?>" class="w-20">
-                </td>
+            <td>
+                <img src="/webbanhang/storage/uploads/<?= $product['image'] ?>" class="w-20">
+            </td>
 
-                <td>
-                    <a href="?route=admin/products/show&id=<?= $product['id'] ?>" class="text-blue-500">
-                        View
-                    </a>
-                    <a href="?route=admin/products/edit&id=<?= $product['id'] ?>" class="text-blue-500">
-                        Edit
-                    </a>
-                </td>
-            </tr>
+            <td>
+                <a href="?route=admin/products/show&id=<?= $product['id'] ?>" class="text-blue-500">
+                    View
+                </a>
+                <a href="?route=admin/products/edit&id=<?= $product['id'] ?>" class="text-blue-500">
+                    Edit
+                </a>
+                <a href="?route=admin/products/delete&id=<?= $product['id'] ?>" class="text-red-500">
+                    Delete
+                </a>
+            </td>
+        </tr>
 
         <?php endforeach; ?>
 
