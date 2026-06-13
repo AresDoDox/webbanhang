@@ -102,4 +102,22 @@ class ProductController extends Controller
 
         exit;
     }
+
+    public function delete()
+    {
+        AdminMiddleware::handle();
+
+        $productService = new ProductService();
+        $deleted = $productService->delete();
+
+        if ($deleted) {
+            Flash::set('success', 'Product deleted');
+        } else {
+            Flash::set('error', 'Failed to delete product');
+        }
+
+        $this->redirect('?route=admin/products');
+
+        exit;
+    }
 }

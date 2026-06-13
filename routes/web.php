@@ -78,6 +78,11 @@ switch ($route) {
         $productController->update();
         break;
 
+    case 'admin/products/delete':
+        $productController = new ProductController();
+        $productController->delete();
+        break;
+
     default:
         echo "404 Not Found";
 }
