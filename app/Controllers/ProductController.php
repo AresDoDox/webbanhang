@@ -2,12 +2,10 @@
 
 namespace App\Controllers;
 
-use App\Models\Product;
 use App\Middleware\AdminMiddleware;
 use App\Helpers\Csrf;
 use App\Helpers\Flash;
 use App\Services\ProductService;
-use App\Helpers\Request;
 
 class ProductController extends Controller
 {
@@ -15,19 +13,8 @@ class ProductController extends Controller
     {
         AdminMiddleware::handle();
 
-        $product = new Product();
-
-        $keyword =
-            $_GET['keyword'] ?? '';
-
-        if ($keyword) {
-            $products =
-                $product->search(
-                    $keyword
-                );
-        } else {
-            $products = $product->getAll();
-        }
+        $productService = new ProductService();
+        $products = $productService->getAll();
 
         $this->view(
             'admin/products/index',
@@ -39,15 +26,8 @@ class ProductController extends Controller
     {
         AdminMiddleware::handle();
 
-        $id = (int) Request::get('id');
-
-        if (!$id) {
-            die('Product ID is required');
-        }
-
-        $productModel = new Product();
-
-        $product = $productModel->findOrFail($id);
+        $productService = new ProductService();
+        $product = $productService->show();
 
         $this->view(
             'admin/products/show',
