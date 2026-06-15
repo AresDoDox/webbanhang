@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Post;
 use App\Helpers\Request;
+use App\Policies\PostPolicy;
 
 class PostService
 {
@@ -57,6 +58,14 @@ class PostService
             die('Post ID is required');
         }
 
+        $post = $this->postModel->findOrFail($id);
+
+        if (!PostPolicy::owns($post)) {
+            http_response_code(403);
+
+            die('Forbidden');
+        }
+
         $userId = $_SESSION['user']['id'];
 
         $updateData = [
@@ -74,6 +83,14 @@ class PostService
 
         if (!$id) {
             die('Product ID is required');
+        }
+
+        $post = $this->postModel->findOrFail($id);
+
+        if (!PostPolicy::owns($post)) {
+            http_response_code(403);
+
+            die('Forbidden');
         }
 
         return $this->postModel->delete($id);
