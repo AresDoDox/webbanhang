@@ -49,9 +49,7 @@ class ProductController extends Controller
     {
         AdminMiddleware::handle();
 
-        if (
-            !Csrf::verify($_POST['csrf'] ?? '')
-        ) {
+        if (!Csrf::verify($_POST['csrf'] ?? '')) {
             die('Invalid CSRF');
         }
 

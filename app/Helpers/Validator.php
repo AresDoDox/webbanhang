@@ -5,13 +5,13 @@ namespace App\Helpers;
 class Validator
 {
     public static function required(
-        $value
+        string $value
     ): bool {
         return trim($value) !== '';
     }
 
     public static function email(
-        $value
+        string $value
     ): bool {
         return filter_var(
             $value,
@@ -20,8 +20,8 @@ class Validator
     }
 
     public static function min(
-        $value,
-        $length
+        string $value,
+        int $length
     ): bool {
         return strlen($value) >= $length;
     }
