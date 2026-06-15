@@ -15,6 +15,12 @@ class PostService
         $this->postModel = new Post();
     }
 
+    public function getAll()
+    {
+        $posts = $this->postModel->getAll();
+        return $posts;
+    }
+
     public function getByUser()
     {
         $userId = $_SESSION['user']['id'];

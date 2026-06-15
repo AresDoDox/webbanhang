@@ -6,6 +6,18 @@ use PDO;
 
 class Post extends Model
 {
+    public function getAll()
+    {
+        $query = "SELECT * FROM posts
+            ORDER BY id DESC
+        ";
+        $stmt = $this->db->prepare($query);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     // Get list post theo user (người tạo)
     public function getByUser(int $userId)
     {
