@@ -2,13 +2,17 @@
 
 namespace App\Policies;
 
+use App\Enums\Role;
+
 class PostPolicy
 {
     public static function owns(
         array $post
     ): bool {
-        $userId = $_SESSION['user']['id'];
+        if ($_SESSION['user']['role'] === Role::ADMIN->value) {
+            return true;
+        }
 
-        return $post['user_id'] == $userId;
+        return $post['user_id'] == $_SESSION['user']['id'];
     }
 }

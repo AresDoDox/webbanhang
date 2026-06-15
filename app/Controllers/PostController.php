@@ -7,6 +7,7 @@ use App\Helpers\Flash;
 use App\Middleware\AuthMiddleware;
 use App\Services\PostService;
 use App\Validators\PostValidator;
+use App\Enums\Role;
 
 class PostController extends Controller
 {
@@ -16,7 +17,11 @@ class PostController extends Controller
         AuthMiddleware::handle();
 
         $postService = new PostService();
-        $posts = $postService->getByUser();
+        if ($_SESSION['user']['role'] === Role::ADMIN->value) {
+            $posts = $postService->getAll();
+        } else {
+            $posts = $postService->getByUser();
+        }
 
         $this->view(
             'user/posts/index',
