@@ -40,6 +40,12 @@
 
                     </a>
 
+                    <a href="?route=posts">
+
+                        Posts
+
+                    </a>
+
                     <?php if (
                         $_SESSION['user']['role']
                         === 'admin'

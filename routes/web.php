@@ -5,6 +5,7 @@ use App\Controllers\HomeController;
 use App\Controllers\UserController;
 use App\Controllers\AdminController;
 use App\Controllers\ProductController;
+use App\Controllers\PostController;
 
 $route = $_GET['route'] ?? '/';
 switch ($route) {
@@ -81,6 +82,41 @@ switch ($route) {
     case 'admin/products/delete':
         $productController = new ProductController();
         $productController->delete();
+        break;
+
+    case 'posts':
+        $postController = new PostController();
+        $postController->index();
+        break;
+
+    case 'posts/create':
+        $postController = new PostController();
+        $postController->create();
+        break;
+
+    case 'posts/store':
+        $postController = new PostController();
+        $postController->store();
+        break;
+
+    case 'posts/show':
+        $postController = new PostController();
+        $postController->show();
+        break;
+
+    case 'posts/edit':
+        $postController = new PostController();
+        $postController->edit();
+        break;
+
+    case 'posts/update':
+        $postController = new PostController();
+        $postController->update();
+        break;
+
+    case 'posts/delete':
+        $postController = new PostController();
+        $postController->delete();
         break;
 
     default:
