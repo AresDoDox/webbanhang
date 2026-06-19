@@ -24,11 +24,9 @@ class ProductController extends Controller
         );
     }
 
-    public function show()
+    public function show(int $id)
     {
         AdminMiddleware::handle();
-
-        $id = (int) Request::get('id');
 
         if (!$id) {
             throw new \Exception('Product ID is required');
@@ -79,11 +77,9 @@ class ProductController extends Controller
         $this->redirect('/admin/products');
     }
 
-    public function edit()
+    public function edit(int $id)
     {
         AdminMiddleware::handle();
-
-        $id = (int) Request::get('id');
 
         if (!$id) {
             throw new \Exception('Product ID is required');
@@ -135,11 +131,9 @@ class ProductController extends Controller
         exit;
     }
 
-    public function delete()
+    public function delete(int $id)
     {
         AdminMiddleware::handle();
-
-        $id = (int) Request::get('id');
 
         if (!$id) {
             throw new \Exception('Product ID is required');

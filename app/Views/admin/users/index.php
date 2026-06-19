@@ -18,9 +18,8 @@ if (!isset($result) || !is_array($result)) {
 
 </div>
 
-<form method="GET">
+<form method="GET" action="<?= BASE_PATH ?>/admin/users">
     <div class="flex justify-between">
-        <input type="hidden" name="route" value="admin/users">
         <input type="text" name="keyword" class="border w-full p-2 m-2">
         <button class="btn btn-blue">Search</button>
     </div>

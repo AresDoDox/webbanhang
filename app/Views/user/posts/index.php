@@ -27,32 +27,32 @@
 
         <?php foreach ($posts ?? [] as $post): ?>
 
-        <tr>
+            <tr>
 
-            <td>
-                <?= $post['id'] ?>
-            </td>
+                <td>
+                    <?= $post['id'] ?>
+                </td>
 
-            <td>
-                <?= htmlspecialchars($post['title']) ?>
-            </td>
+                <td>
+                    <?= htmlspecialchars($post['title']) ?>
+                </td>
 
-            <td>
-                <?= htmlspecialchars($post['content']) ?>
-            </td>
+                <td>
+                    <?= htmlspecialchars($post['content']) ?>
+                </td>
 
-            <td>
-                <a href="<?= BASE_PATH ?>/posts/show?id=<?= $post['id'] ?>" class="text-blue-500">
-                    View
-                </a>
-                <a href="<?= BASE_PATH ?>/posts/edit?id=<?= $post['id'] ?>" class="text-blue-500">
-                    Edit
-                </a>
-                <a href="<?= BASE_PATH ?>/posts/delete?id=<?= $post['id'] ?>" class="text-red-500">
-                    Delete
-                </a>
-            </td>
-        </tr>
+                <td>
+                    <a href="<?= BASE_PATH ?>/posts/show/<?= $post['id'] ?>" class="text-blue-500">
+                        View
+                    </a>
+                    <a href="<?= BASE_PATH ?>/posts/edit/<?= $post['id'] ?>" class="text-blue-500">
+                        Edit
+                    </a>
+                    <a href="<?= BASE_PATH ?>/posts/delete/<?= $post['id'] ?>" class="text-red-500">
+                        Delete
+                    </a>
+                </td>
+            </tr>
 
         <?php endforeach; ?>
     </tbody>

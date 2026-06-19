@@ -23,12 +23,8 @@ if (!isset($result) || !is_array($result)) {
 
 </div>
 
-<form method="GET">
-
-    <input type="hidden" name="route" value="admin/products">
-
+<form method="GET" action="<?= BASE_PATH ?>/admin/products">
     <input type="text" name="keyword" class="border w-full p-2 m-2">
-
 </form>
 
 <table class="w-full bg-white shadow">
@@ -47,36 +43,36 @@ if (!isset($result) || !is_array($result)) {
 
         <?php foreach ($result['data'] ?? [] as $product): ?>
 
-        <tr>
+            <tr>
 
-            <td>
-                <?= $product['id'] ?>
-            </td>
+                <td>
+                    <?= $product['id'] ?>
+                </td>
 
-            <td>
-                <?= htmlspecialchars($product['name']) ?>
-            </td>
+                <td>
+                    <?= htmlspecialchars($product['name']) ?>
+                </td>
 
-            <td>
-                <?= $product['price'] ?>
-            </td>
+                <td>
+                    <?= $product['price'] ?>
+                </td>
 
-            <td>
-                <img src="/webbanhang/storage/uploads/<?= $product['image'] ?>" class="w-20">
-            </td>
+                <td>
+                    <img src="/webbanhang/storage/uploads/<?= $product['image'] ?>" class="w-20">
+                </td>
 
-            <td>
-                <a href="<?= BASE_PATH ?>/admin/products/show?id=<?= $product['id'] ?>" class="text-blue-500">
-                    View
-                </a>
-                <a href="<?= BASE_PATH ?>/admin/products/edit?id=<?= $product['id'] ?>" class="text-blue-500">
-                    Edit
-                </a>
-                <a href="<?= BASE_PATH ?>/admin/products/delete?id=<?= $product['id'] ?>" class="text-red-500">
-                    Delete
-                </a>
-            </td>
-        </tr>
+                <td>
+                    <a href="<?= BASE_PATH ?>/admin/products/show/<?= $product['id'] ?>" class="text-blue-500">
+                        View
+                    </a>
+                    <a href="<?= BASE_PATH ?>/admin/products/edit/<?= $product['id'] ?>" class="text-blue-500">
+                        Edit
+                    </a>
+                    <a href="<?= BASE_PATH ?>/admin/products/delete/<?= $product['id'] ?>" class="text-red-500">
+                        Delete
+                    </a>
+                </td>
+            </tr>
 
         <?php endforeach; ?>
     </tbody>
@@ -86,12 +82,12 @@ if (!isset($result) || !is_array($result)) {
     <nav class="flex items-center gap-x-1" aria-label="Pagination">
         <div class="flex items-center gap-x-1">
             <?php if ($result['totalPages'] > 1): ?>
-            <?php for ($i = 1; $i <= $result['totalPages']; $i++): ?>
-            <a href="<?= BASE_PATH ?>/admin/products?page=<?= $i ?>&keyword=<?= urlencode($result['keyword']) ?>"
-                class="flex items-center justify-center min-w-9 h-9 px-3 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 <?= ($i == $result['page']) ? 'bg-blue-600 text-white' : 'bg-white' ?>">
-                <?= $i ?>
-            </a>
-            <?php endfor; ?>
+                <?php for ($i = 1; $i <= $result['totalPages']; $i++): ?>
+                    <a href="<?= BASE_PATH ?>/admin/products?page=<?= $i ?>&keyword=<?= urlencode($result['keyword']) ?>"
+                        class="flex items-center justify-center min-w-9 h-9 px-3 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 <?= ($i == $result['page']) ? 'bg-blue-600 text-white' : 'bg-white' ?>">
+                        <?= $i ?>
+                    </a>
+                <?php endfor; ?>
             <?php endif; ?>
         </div>
     </nav>

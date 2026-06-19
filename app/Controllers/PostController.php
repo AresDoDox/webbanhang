@@ -34,11 +34,10 @@ class PostController extends Controller
         }
     }
 
-    public function show()
+    public function show(int $id)
     {
         try {
             AuthMiddleware::handle();
-            $id = (int) Request::get('id');
 
             if (!$id) {
                 throw new \Exception('Post ID is required');
@@ -94,12 +93,10 @@ class PostController extends Controller
         }
     }
 
-    public function edit()
+    public function edit(int $id)
     {
         try {
             AuthMiddleware::handle();
-
-            $id = (int) Request::get('id');
 
             if (!$id) {
                 throw new \Exception('Post ID is required');
@@ -156,12 +153,10 @@ class PostController extends Controller
         }
     }
 
-    public function delete()
+    public function delete(int $id)
     {
         try {
             AuthMiddleware::handle();
-
-            $id = (int) Request::get('id');
 
             if (!$id) {
                 throw new \Exception('Post ID is required');
