@@ -175,4 +175,12 @@ class User extends Model
 
         return $stmt->fetch()['total'];
     }
+
+    public function count(): int
+    {
+        $query = "SELECT COUNT(*) total FROM users";
+        $stmt = $this->db->query($query);
+
+        return (int) $stmt->fetch()['total'];
+    }
 }

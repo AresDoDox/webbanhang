@@ -3,7 +3,7 @@
 use App\Controllers\AuthController;
 use App\Controllers\HomeController;
 use App\Controllers\UserController;
-use App\Controllers\AdminController;
+use App\Controllers\DashboardController;
 use App\Controllers\ProductController;
 use App\Controllers\PostController;
 use App\Controllers\AdminUserController;
@@ -46,8 +46,8 @@ switch ($route) {
         break;
 
     case 'admin/dashboard':
-        $adminController = new AdminController();
-        $adminController->dashboard();
+        $dashboardController = new DashboardController();
+        $dashboardController->index();
         break;
 
     case 'admin/products':
