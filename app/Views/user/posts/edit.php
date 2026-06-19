@@ -18,7 +18,7 @@ use App\Helpers\Csrf; ?>
         Edit Post
     </h1>
 
-    <form action="?route=posts/update" method="POST">
+    <form action="<?= BASE_PATH ?>/posts/update" method="POST">
         <!-- CSRF -->
         <input type="hidden" name="csrf" value="<?= Csrf::token() ?>">
         <input type="hidden" name="id" value="<?= $post['id'] ?>">

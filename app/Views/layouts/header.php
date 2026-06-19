@@ -15,7 +15,7 @@
     <nav class="bg-indigo-600 text-white shadow">
         <div class="container mx-auto px-6 py-4 flex justify-between">
 
-            <a href="?route=/" class="font-bold">
+            <a href="<?= BASE_PATH ?>/" class="font-bold">
                 PHP Project
             </a>
 
@@ -35,13 +35,13 @@
 
                     <span> | </span>
 
-                    <a href="?route=dashboard">
+                    <a href="<?= BASE_PATH ?>/dashboard">
 
                         Dashboard
 
                     </a>
 
-                    <a href="?route=posts">
+                    <a href="<?= BASE_PATH ?>/posts">
 
                         Posts
 
@@ -52,7 +52,7 @@
                         === 'admin'
                     ): ?>
 
-                        <a href="?route=admin/dashboard">
+                        <a href="<?= BASE_PATH ?>/admin/dashboard">
 
                             Admin Panel
 
@@ -60,7 +60,7 @@
 
                     <?php endif; ?>
 
-                    <a href="?route=logout">
+                    <a href="<?= BASE_PATH ?>/logout">
 
                         Logout
 
@@ -68,13 +68,13 @@
 
                 <?php else: ?>
 
-                    <a href="?route=login">
+                    <a href="<?= BASE_PATH ?>/login">
 
                         Login
 
                     </a>
 
-                    <a href="?route=register">
+                    <a href="<?= BASE_PATH ?>/register">
 
                         Register
 

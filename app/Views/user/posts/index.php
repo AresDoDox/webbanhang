@@ -6,7 +6,7 @@
         Posts
     </h1>
 
-    <a href="?route=posts/create" class="bg-indigo-600 text-white px-4 py-2 rounded">
+    <a href="<?= BASE_PATH ?>/posts/create" class="bg-indigo-600 text-white px-4 py-2 rounded">
         Add Post
     </a>
 
@@ -42,13 +42,13 @@
             </td>
 
             <td>
-                <a href="?route=posts/show&id=<?= $post['id'] ?>" class="text-blue-500">
+                <a href="<?= BASE_PATH ?>/posts/show?id=<?= $post['id'] ?>" class="text-blue-500">
                     View
                 </a>
-                <a href="?route=posts/edit&id=<?= $post['id'] ?>" class="text-blue-500">
+                <a href="<?= BASE_PATH ?>/posts/edit?id=<?= $post['id'] ?>" class="text-blue-500">
                     Edit
                 </a>
-                <a href="?route=posts/delete&id=<?= $post['id'] ?>" class="text-red-500">
+                <a href="<?= BASE_PATH ?>/posts/delete?id=<?= $post['id'] ?>" class="text-red-500">
                     Delete
                 </a>
             </td>

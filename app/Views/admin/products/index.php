@@ -17,7 +17,7 @@ if (!isset($result) || !is_array($result)) {
         Products
     </h1>
 
-    <a href="?route=admin/products/create" class="bg-indigo-600 text-white px-4 py-2 rounded">
+    <a href="<?= BASE_PATH ?>/admin/products/create" class="bg-indigo-600 text-white px-4 py-2 rounded">
         Add Product
     </a>
 
@@ -66,13 +66,13 @@ if (!isset($result) || !is_array($result)) {
             </td>
 
             <td>
-                <a href="?route=admin/products/show&id=<?= $product['id'] ?>" class="text-blue-500">
+                <a href="<?= BASE_PATH ?>/admin/products/show?id=<?= $product['id'] ?>" class="text-blue-500">
                     View
                 </a>
-                <a href="?route=admin/products/edit&id=<?= $product['id'] ?>" class="text-blue-500">
+                <a href="<?= BASE_PATH ?>/admin/products/edit?id=<?= $product['id'] ?>" class="text-blue-500">
                     Edit
                 </a>
-                <a href="?route=admin/products/delete&id=<?= $product['id'] ?>" class="text-red-500">
+                <a href="<?= BASE_PATH ?>/admin/products/delete?id=<?= $product['id'] ?>" class="text-red-500">
                     Delete
                 </a>
             </td>
@@ -87,7 +87,7 @@ if (!isset($result) || !is_array($result)) {
         <div class="flex items-center gap-x-1">
             <?php if ($result['totalPages'] > 1): ?>
             <?php for ($i = 1; $i <= $result['totalPages']; $i++): ?>
-            <a href="?route=admin/products&page=<?= $i ?>&keyword=<?= urlencode($result['keyword']) ?>"
+            <a href="<?= BASE_PATH ?>/admin/products?page=<?= $i ?>&keyword=<?= urlencode($result['keyword']) ?>"
                 class="flex items-center justify-center min-w-9 h-9 px-3 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 <?= ($i == $result['page']) ? 'bg-blue-600 text-white' : 'bg-white' ?>">
                 <?= $i ?>
             </a>

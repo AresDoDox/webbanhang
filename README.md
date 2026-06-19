@@ -31,11 +31,7 @@ Chúng ta sẽ làm theo các giai đoạn:
 ## Giai đoạn 5 - CRUD Personal Post (User)
 - User chỉ sửa dữ liệu của chính mình
 
-## Giai đoạn 6 - Realtime Chat
-- AJAX Polling
-- Public Chat
-
-## Giai đoạn 7 - Hoàn thiện
+## Giai đoạn 6 - Hoàn thiện
 - Pagination
 - Search
 - CSRF

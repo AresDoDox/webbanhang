@@ -10,7 +10,7 @@ use App\Helpers\Csrf; ?>
         Create Post
     </h1>
 
-    <form action="?route=posts/store" method="POST">
+    <form action="<?= BASE_PATH ?>/posts/store" method="POST">
         <?php require '../app/Views/layouts/flash.php'; ?>
         <!-- CSRF -->
         <input type="hidden" name="csrf" value="<?= Csrf::token() ?>">

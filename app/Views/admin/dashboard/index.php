@@ -6,7 +6,7 @@
 
 <div class="grid grid-cols-3 gap-4">
 
-    <a href="?route=admin/users">
+    <a href="<?= BASE_PATH ?>/admin/users">
         <div class="bg-white p-6 rounded shadow">
             <h2 class="text-gray-500">Users</h2>
             <p class="text-4xl font-bold mt-2">
@@ -15,7 +15,7 @@
         </div>
     </a>
 
-    <a href="?route=admin/products">
+    <a href="<?= BASE_PATH ?>/admin/products">
         <div class="bg-white p-6 rounded shadow">
             <h2 class="text-gray-500">Products</h2>
             <p class="text-4xl font-bold mt-2">
@@ -24,7 +24,7 @@
         </div>
     </a>
 
-    <a href="?route=posts">
+    <a href="<?= BASE_PATH ?>/posts">
         <div class="bg-white p-6 rounded shadow">
             <h2 class="text-gray-500">Posts</h2>
             <p class="text-4xl font-bold mt-2">
