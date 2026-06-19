@@ -9,7 +9,7 @@ class AdminMiddleware
     public static function handle()
     {
         if (!isset($_SESSION['user'])) {
-            header('Location:?route=login');
+            header('Location:' . BASE_PATH . '/login');
             exit;
         }
 

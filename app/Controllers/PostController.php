@@ -82,13 +82,13 @@ class PostController extends Controller
 
             if (!empty($errors)) {
                 Flash::set('error', $errors[0]);
-                return $this->redirect('?route=posts/create');
+                return $this->redirect('/posts/create');
             }
 
             $postService = new PostService();
             $postService->create($_POST);
 
-            $this->redirect('?route=posts');
+            $this->redirect('/posts');
         } catch (\Exception $e) {
             Flash::set('error', $e->getMessage());
         }
@@ -138,7 +138,7 @@ class PostController extends Controller
 
             if (!empty($errors)) {
                 Flash::set('error', $errors[0]);
-                return $this->redirect('?route=posts/create');
+                return $this->redirect('/posts/create');
             }
 
             $postService = new PostService();
@@ -150,7 +150,7 @@ class PostController extends Controller
                 Flash::set('error', 'Failed to update post');
             }
 
-            $this->redirect('?route=posts');
+            $this->redirect('/posts');
         } catch (\Exception $e) {
             Flash::set('error', $e->getMessage());
         }
@@ -176,7 +176,7 @@ class PostController extends Controller
                 Flash::set('error', 'Failed to delete post');
             }
 
-            $this->redirect('?route=posts');
+            $this->redirect('/posts');
         } catch (\Exception $e) {
             Flash::set('error', $e->getMessage());
         }

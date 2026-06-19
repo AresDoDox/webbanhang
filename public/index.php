@@ -2,8 +2,12 @@
 
 session_start();
 
+define('BASE_PATH', rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'])), '/'));
+
 require_once '../config/database.php';
 
 require_once '../vendor/autoload.php';
 
-require_once '../routes/web.php';
+$router = require '../routes/web.php';
+
+$router->dispatch();

@@ -9,7 +9,7 @@ use App\Helpers\Csrf; ?>
         Register
     </h1>
 
-    <form method="POST" action="?route=register-post">
+    <form method="POST" action="<?= BASE_PATH ?>/register-post">
         <?php require '../app/Views/layouts/flash.php'; ?>
         <input type="hidden" name="csrf" value="<?= Csrf::token() ?>">
 

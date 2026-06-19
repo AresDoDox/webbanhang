@@ -36,7 +36,7 @@ class AuthController extends Controller
                 'Tên không được để trống'
             );
 
-            $this->redirect('?route=register');
+            $this->redirect('/register');
             exit;
         }
 
@@ -47,7 +47,7 @@ class AuthController extends Controller
                 'Email không hợp lệ'
             );
 
-            $this->redirect('?route=register');
+            $this->redirect('/register');
             exit;
         }
 
@@ -58,7 +58,7 @@ class AuthController extends Controller
                 'Mật khẩu tối thiểu 6 ký tự'
             );
 
-            $this->redirect('?route=register');
+            $this->redirect('/register');
             exit;
         }
 
@@ -68,7 +68,7 @@ class AuthController extends Controller
                 'Email đã tồn tại'
             );
 
-            $this->redirect('?route=register');
+            $this->redirect('/register');
             exit;
         }
 
@@ -78,7 +78,7 @@ class AuthController extends Controller
                 'Đăng ký thành công. Vui lòng đăng nhập.'
             );
 
-            $this->redirect('?route=login');
+            $this->redirect('/login');
         } else {
             echo "Đăng ký thất bại!";
         }
@@ -101,9 +101,9 @@ class AuthController extends Controller
             if (
                 $foundUser['role'] === 'admin'
             ) {
-                $this->redirect('?route=admin/dashboard');
+                $this->redirect('/admin/dashboard');
             } else {
-                $this->redirect('?route=dashboard');
+                $this->redirect('/dashboard');
             }
         } else {
             Flash::set(
@@ -111,7 +111,7 @@ class AuthController extends Controller
                 'Email hoặc mật khẩu không đúng'
             );
 
-            $this->redirect('?route=login');
+            $this->redirect('/login');
         }
     }
 
@@ -119,6 +119,6 @@ class AuthController extends Controller
     {
         session_destroy();
 
-        $this->redirect('?route=login');
+        $this->redirect('/login');
     }
 }

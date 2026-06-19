@@ -10,7 +10,7 @@ use App\Helpers\Csrf; ?>
         Create Product
     </h1>
 
-    <form action="?route=admin/products/store" method="POST" enctype="multipart/form-data">
+    <form action="<?= BASE_PATH ?>/admin/products/store" method="POST" enctype="multipart/form-data">
         <?php require '../app/Views/layouts/flash.php'; ?>
         <!-- CSRF -->
         <input type="hidden" name="csrf" value="<?= Csrf::token() ?>">

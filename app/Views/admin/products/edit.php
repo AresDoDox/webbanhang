@@ -20,7 +20,7 @@ use App\Helpers\Csrf; ?>
         Edit Product
     </h1>
 
-    <form action="?route=admin/products/update" method="POST" enctype="multipart/form-data">
+    <form action="<?= BASE_PATH ?>/admin/products/update" method="POST" enctype="multipart/form-data">
         <!-- CSRF -->
         <input type="hidden" name="csrf" value="<?= Csrf::token() ?>">
         <input type="hidden" name="id" value="<?= $product['id'] ?>">

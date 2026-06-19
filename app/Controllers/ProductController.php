@@ -64,7 +64,7 @@ class ProductController extends Controller
 
         if (!empty($errors)) {
             Flash::set('error', $errors[0]);
-            return $this->redirect('?route=admin/products/create');
+            return $this->redirect('/admin/products/create');
         }
 
         $productService = new ProductService();
@@ -76,7 +76,7 @@ class ProductController extends Controller
         //     Flash::set('error', 'Failed to create product');
         // }
 
-        $this->redirect('?route=admin/products');
+        $this->redirect('/admin/products');
     }
 
     public function edit()
@@ -118,7 +118,7 @@ class ProductController extends Controller
 
         if (!empty($errors)) {
             Flash::set('error', $errors[0]);
-            return $this->redirect('?route=admin/products/create');
+            return $this->redirect('/admin/products/create');
         }
 
         $productService = new ProductService();
@@ -130,7 +130,7 @@ class ProductController extends Controller
             Flash::set('error', 'Failed to update product');
         }
 
-        $this->redirect('?route=admin/products');
+        $this->redirect('/admin/products');
 
         exit;
     }
@@ -154,7 +154,7 @@ class ProductController extends Controller
             Flash::set('error', 'Failed to delete product');
         }
 
-        $this->redirect('?route=admin/products');
+        $this->redirect('/admin/products');
 
         exit;
     }

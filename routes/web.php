@@ -1,5 +1,6 @@
 <?php
 
+use App\Core\Router;
 use App\Controllers\AuthController;
 use App\Controllers\HomeController;
 use App\Controllers\UserController;
@@ -8,123 +9,30 @@ use App\Controllers\ProductController;
 use App\Controllers\PostController;
 use App\Controllers\AdminUserController;
 
-$route = $_GET['route'] ?? '/';
-switch ($route) {
-    case '/':
-        $homeController = new HomeController();
-        $homeController->index();
-        break;
+$router = new Router();
 
-    case 'register':
-        $authController = new AuthController();
-        $authController->showRegister();
-        break;
+$router->get('/', [HomeController::class, 'index']);
+$router->get('/register', [AuthController::class, 'showRegister']);
+$router->post('/register-post', [AuthController::class, 'register']);
+$router->get('/login', [AuthController::class, 'showLogin']);
+$router->post('/login-post', [AuthController::class, 'login']);
+$router->get('/logout', [AuthController::class, 'logout']);
+$router->get('/dashboard', [UserController::class, 'dashboard']);
+$router->get('/admin/dashboard', [DashboardController::class, 'index']);
+$router->get('/admin/products', [ProductController::class, 'index']);
+$router->get('/admin/products/show', [ProductController::class, 'show']);
+$router->get('/admin/products/create', [ProductController::class, 'create']);
+$router->post('/admin/products/store', [ProductController::class, 'store']);
+$router->get('/admin/products/edit', [ProductController::class, 'edit']);
+$router->post('/admin/products/update', [ProductController::class, 'update']);
+$router->get('/admin/products/delete', [ProductController::class, 'delete']);
+$router->get('/admin/users', [AdminUserController::class, 'index']);
+$router->get('/posts', [PostController::class, 'index']);
+$router->get('/posts/create', [PostController::class, 'create']);
+$router->post('/posts/store', [PostController::class, 'store']);
+$router->get('/posts/show', [PostController::class, 'show']);
+$router->get('/posts/edit', [PostController::class, 'edit']);
+$router->post('/posts/update', [PostController::class, 'update']);
+$router->get('/posts/delete', [PostController::class, 'delete']);
 
-    case 'register-post':
-        $authController = new AuthController();
-        $authController->register();
-        break;
-
-    case 'login':
-        $authController = new AuthController();
-        $authController->showLogin();
-        break;
-
-    case 'login-post':
-        $authController = new AuthController();
-        $authController->login();
-        break;
-
-    case 'logout':
-        $authController = new AuthController();
-        $authController->logout();
-        break;
-
-    case 'dashboard':
-        $userController = new UserController();
-        $userController->dashboard();
-        break;
-
-    case 'admin/dashboard':
-        $dashboardController = new DashboardController();
-        $dashboardController->index();
-        break;
-
-    case 'admin/products':
-        $productController = new ProductController();
-        $productController->index();
-        break;
-
-    case 'admin/products/show':
-        $productController = new ProductController();
-        $productController->show();
-        break;
-
-    case 'admin/products/create':
-        $productController = new ProductController();
-        $productController->create();
-        break;
-
-    case 'admin/products/store':
-        $productController = new ProductController();
-        $productController->store();
-        break;
-
-    case 'admin/products/edit':
-        $productController = new ProductController();
-        $productController->edit();
-        break;
-
-    case 'admin/products/update':
-        $productController = new ProductController();
-        $productController->update();
-        break;
-
-    case 'admin/products/delete':
-        $productController = new ProductController();
-        $productController->delete();
-        break;
-
-    case 'admin/users':
-        $adminUserController = new AdminUserController();
-        $adminUserController->index();
-        break;
-
-    case 'posts':
-        $postController = new PostController();
-        $postController->index();
-        break;
-
-    case 'posts/create':
-        $postController = new PostController();
-        $postController->create();
-        break;
-
-    case 'posts/store':
-        $postController = new PostController();
-        $postController->store();
-        break;
-
-    case 'posts/show':
-        $postController = new PostController();
-        $postController->show();
-        break;
-
-    case 'posts/edit':
-        $postController = new PostController();
-        $postController->edit();
-        break;
-
-    case 'posts/update':
-        $postController = new PostController();
-        $postController->update();
-        break;
-
-    case 'posts/delete':
-        $postController = new PostController();
-        $postController->delete();
-        break;
-
-    default:
-        echo "404 Not Found";
-}
+return $router;

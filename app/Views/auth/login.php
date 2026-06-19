@@ -11,7 +11,7 @@ use App\Helpers\Flash; ?>
     </h1>
     <?php require '../app/Views/layouts/flash.php'; ?>
 
-    <form method="POST" action="?route=login-post">
+    <form method="POST" action="<?= BASE_PATH ?>/login-post">
 
         <input type="email" name="email" placeholder="Email" class="border w-full p-2 mb-3" required>
 
