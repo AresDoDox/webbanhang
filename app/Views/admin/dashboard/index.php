@@ -33,6 +33,34 @@
         </div>
     </a>
 
+    <canvas id="statsChart"></canvas>
+
 </div>
 
+<script>
+    const ctx = document.getElementById('statsChart').getContext('2d');
+
+    new Chart(
+        ctx, {
+            type: 'bar',
+            data: {
+                labels: [
+                    'Users',
+                    'Products',
+                    'Posts'
+                ],
+
+                datasets: [{
+                        data: [
+                            <?= (isset($stats) && isset($stats['users'])) ? $stats['users'] : 0 ?>,
+                            <?= (isset($stats) && isset($stats['products'])) ? $stats['products'] : 0 ?>,
+                            <?= (isset($stats) && isset($stats['posts'])) ? $stats['posts'] : 0 ?>
+                        ]
+                    }
+
+                ]
+            }
+        }
+    );
+</script>
 <?php require '../app/Views/layouts/footer.php'; ?>
