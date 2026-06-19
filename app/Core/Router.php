@@ -31,7 +31,7 @@ class Router
             $uri = '/';
         }
 
-        $action = $this->routes[$method][$uri] ?? null;
+        $action = $this->getRouteAction($method, $uri);
 
         if (!$action) {
             http_response_code(404);
@@ -39,8 +39,31 @@ class Router
             throw new \Exception('Page Not Found');
         }
 
-        [$controller, $method] = $action;
+        [$controller, $method, $params] = $action;
 
-        (new $controller())->{$method}();
+        if (!empty($params)) {
+            (new $controller())->{$method}(...$params);
+        } else {
+            (new $controller())->{$method}();
+        }
+    }
+
+    private function getRouteAction(string $method, string $uri): ?array
+    {
+        if (isset($this->routes[$method][$uri])) {
+            return [$this->routes[$method][$uri][0], $this->routes[$method][$uri][1], []];
+        }
+
+        foreach ($this->routes[$method] as $route => $action) {
+            $routePattern = preg_replace('#\{[^/]+\}#', '([^/]+)', $route);
+            $routePattern = '#^' . $routePattern . '$#';
+
+            if (preg_match($routePattern, $uri, $matches)) {
+                array_shift($matches);
+                return [$action[0], $action[1], $matches];
+            }
+        }
+
+        return null;
     }
 }
