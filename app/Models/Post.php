@@ -102,4 +102,12 @@ class Post extends Model
             'id' => $id
         ]);
     }
+
+    public function count(): int
+    {
+        $query = "SELECT COUNT(*) total FROM posts";
+        $stmt = $this->db->query($query);
+
+        return (int) $stmt->fetch()['total'];
+    }
 }

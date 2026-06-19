@@ -183,4 +183,12 @@ class Product extends Model
             'totalPages' => ceil($total / $limit)
         ];
     }
+
+    public function count(): int
+    {
+        $query = "SELECT COUNT(*) total FROM products";
+        $stmt = $this->db->query($query);
+
+        return (int) $stmt->fetch()['total'];
+    }
 }
