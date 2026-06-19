@@ -114,7 +114,7 @@ class ProductController extends Controller
 
         if (!empty($errors)) {
             Flash::set('error', $errors[0]);
-            return $this->redirect('/admin/products/create');
+            return $this->redirect("/admin/products/edit/{$id}");
         }
 
         $productService = new ProductService();
@@ -127,8 +127,6 @@ class ProductController extends Controller
         }
 
         $this->redirect('/admin/products');
-
-        exit;
     }
 
     public function delete(int $id)

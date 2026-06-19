@@ -135,7 +135,7 @@ class PostController extends Controller
 
             if (!empty($errors)) {
                 Flash::set('error', $errors[0]);
-                return $this->redirect('/posts/create');
+                return $this->redirect("/posts/edit/{$id}");
             }
 
             $postService = new PostService();

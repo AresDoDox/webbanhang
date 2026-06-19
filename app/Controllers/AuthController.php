@@ -72,7 +72,7 @@ class AuthController extends Controller
             exit;
         }
 
-        if ($user->create($_POST)) {
+        if ($user->register($_POST)) {
             Flash::set(
                 'success',
                 'Đăng ký thành công. Vui lòng đăng nhập.'
