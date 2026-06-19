@@ -11,7 +11,7 @@ class DashboardController extends Controller
     {
         AdminMiddleware::handle();
 
-        $stats = (new DashboardService())->getStats();
+        $stats = (new DashboardService())->getDataChart();
 
         $this->view(
             'admin/dashboard/index',

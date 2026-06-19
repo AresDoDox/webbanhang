@@ -191,4 +191,17 @@ class Product extends Model
 
         return (int) $stmt->fetch()['total'];
     }
+
+    public function monthlyProducts()
+    {
+        $query = "SELECT
+                MONTH(created_at) month,
+                COUNT(*) total
+            FROM products
+            GROUP BY MONTH(created_at)
+        ";
+        $stmt = $this->db->query($query);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

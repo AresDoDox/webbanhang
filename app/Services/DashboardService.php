@@ -20,4 +20,24 @@ class DashboardService
             'posts' => (new Post())->count()
         ];
     }
+
+    public function getDataChart(): array
+    {
+        return [
+            'users' => [
+                'total' => (new User())->count(),
+                'monthly' => (new User())->monthlyRegistrations()
+            ],
+
+            'products' => [
+                'total' => (new Product())->count(),
+                'monthly' => (new Product())->monthlyProducts()
+            ],
+
+            'posts' => [
+                'total' => (new Post())->count(),
+                'monthly' => (new Post())->monthlyPosts()
+            ]
+        ];
+    }
 }
