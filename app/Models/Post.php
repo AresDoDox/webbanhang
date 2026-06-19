@@ -110,4 +110,17 @@ class Post extends Model
 
         return (int) $stmt->fetch()['total'];
     }
+
+    public function monthlyPosts()
+    {
+        $query = "SELECT
+                MONTH(created_at) month,
+                COUNT(*) total
+            FROM posts
+            GROUP BY MONTH(created_at)
+        ";
+        $stmt = $this->db->query($query);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

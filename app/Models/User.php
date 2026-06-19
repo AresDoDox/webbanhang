@@ -183,4 +183,17 @@ class User extends Model
 
         return (int) $stmt->fetch()['total'];
     }
+
+    public function monthlyRegistrations()
+    {
+        $query = "SELECT
+                MONTH(created_at) month,
+                COUNT(*) total
+            FROM users
+            GROUP BY MONTH(created_at)
+        ";
+        $stmt = $this->db->query($query);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
