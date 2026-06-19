@@ -29,14 +29,8 @@ class ProductService
         return $result;
     }
 
-    public function show()
+    public function show(int $id)
     {
-        $id = (int) Request::get('id');
-
-        if (!$id) {
-            die('Product ID is required');
-        }
-
         $product = $this->productModel->findOrFail($id);
 
         return $product;
@@ -46,10 +40,7 @@ class ProductService
         array $data,
         array $file
     ) {
-        $image =
-            UploadService::image(
-                $file
-            );
+        $image = UploadService::image($file);
 
         $this->productModel->create([
             'name' => $data['name'],
@@ -62,15 +53,10 @@ class ProductService
     }
 
     public function update(
+        int $id,
         array $data,
         array $file
     ) {
-        $id = (int) Request::post('id');
-
-        if (!$id) {
-            die('Product ID is required');
-        }
-
         $product = $this->productModel->findOrFail($id);
 
         $image = $product['image'];
@@ -92,14 +78,8 @@ class ProductService
         return $this->productModel->update($id, $updateData);
     }
 
-    public function delete()
+    public function delete(int $id)
     {
-        $id = (int) Request::get('id');
-
-        if (!$id) {
-            die('Product ID is required');
-        }
-
         return $this->productModel->delete($id);
     }
 }

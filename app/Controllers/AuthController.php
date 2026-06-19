@@ -26,7 +26,7 @@ class AuthController extends Controller
         $password = trim($_POST['password']);
 
         if (!Csrf::verify($_POST['csrf'] ?? '')) {
-            die('Invalid CSRF token');
+            throw new \Exception('Invalid CSRF token');
         }
 
         if (!Validator::required($name)) {

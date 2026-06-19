@@ -8,129 +8,177 @@ use App\Middleware\AuthMiddleware;
 use App\Services\PostService;
 use App\Validators\PostValidator;
 use App\Enums\Role;
+use App\Helpers\Request;
 
 class PostController extends Controller
 {
     // get list
     public function index()
     {
-        AuthMiddleware::handle();
+        try {
+            AuthMiddleware::handle();
 
-        $postService = new PostService();
-        if ($_SESSION['user']['role'] === Role::ADMIN->value) {
-            $posts = $postService->getAll();
-        } else {
-            $posts = $postService->getByUser();
+            $postService = new PostService();
+            if ($_SESSION['user']['role'] === Role::ADMIN->value) {
+                $posts = $postService->getAll();
+            } else {
+                $posts = $postService->getByUser();
+            }
+
+            $this->view(
+                'user/posts/index',
+                compact('posts')
+            );
+        } catch (\Exception $e) {
+            Flash::set('error', $e->getMessage());
         }
-
-        $this->view(
-            'user/posts/index',
-            compact('posts')
-        );
     }
 
     public function show()
     {
-        AuthMiddleware::handle();
+        try {
+            AuthMiddleware::handle();
+            $id = (int) Request::get('id');
 
-        $postService = new PostService();
-        $post = $postService->show();
+            if (!$id) {
+                throw new \Exception('Post ID is required');
+            }
 
-        $this->view(
-            'user/posts/show',
-            compact('post')
-        );
+            $postService = new PostService();
+            $post = $postService->show($id);
+
+            $this->view(
+                'user/posts/show',
+                compact('post')
+            );
+        } catch (\Exception $e) {
+            Flash::set('error', $e->getMessage());
+        }
     }
 
     public function create()
     {
-        AuthMiddleware::handle();
+        try {
+            AuthMiddleware::handle();
 
-        $this->view(
-            'user/posts/create'
-        );
+            $this->view(
+                'user/posts/create'
+            );
+        } catch (\Exception $e) {
+            Flash::set('error', $e->getMessage());
+        }
     }
 
     public function store()
     {
-        AuthMiddleware::handle();
+        try {
+            AuthMiddleware::handle();
 
-        if (!Csrf::verify($_POST['csrf'] ?? '')) {
-            die('Invalid CSRF');
+            if (!Csrf::verify($_POST['csrf'] ?? '')) {
+                throw new \Exception('Invalid CSRF');
+            }
+
+            $errors = PostValidator::validate($_POST);
+
+            if (!empty($errors)) {
+                Flash::set('error', $errors[0]);
+                return $this->redirect('?route=posts/create');
+            }
+
+            $postService = new PostService();
+            $postService->create($_POST);
+
+            $this->redirect('?route=posts');
+        } catch (\Exception $e) {
+            Flash::set('error', $e->getMessage());
         }
-
-        $errors = PostValidator::validate($_POST);
-
-        if (!empty($errors)) {
-            Flash::set('error', $errors[0]);
-            return $this->redirect('?route=posts/create');
-        }
-
-        $postService = new PostService();
-        $postService->create($_POST);
-
-        $this->redirect('?route=posts');
     }
 
     public function edit()
     {
-        AuthMiddleware::handle();
+        try {
+            AuthMiddleware::handle();
 
-        $postService = new PostService();
-        $post = $postService->show();
+            $id = (int) Request::get('id');
 
-        $this->view(
-            'user/posts/edit',
-            compact('post')
-        );
+            if (!$id) {
+                throw new \Exception('Post ID is required');
+            }
+
+            $postService = new PostService();
+            $post = $postService->show($id);
+
+            $this->view(
+                'user/posts/edit',
+                compact('post')
+            );
+        } catch (\Exception $e) {
+            Flash::set('error', $e->getMessage());
+        }
     }
 
     public function update()
     {
-        AuthMiddleware::handle();
+        try {
+            AuthMiddleware::handle();
 
-        if (
-            !Csrf::verify($_POST['csrf'] ?? '')
-        ) {
-            die('Invalid CSRF');
+            $id = (int) Request::post('id');
+
+            if (!$id) {
+                throw new \Exception('Post ID is required');
+            }
+
+            if (
+                !Csrf::verify($_POST['csrf'] ?? '')
+            ) {
+                throw new \Exception('Invalid CSRF');
+            }
+
+            $errors = PostValidator::validate($_POST);
+
+            if (!empty($errors)) {
+                Flash::set('error', $errors[0]);
+                return $this->redirect('?route=posts/create');
+            }
+
+            $postService = new PostService();
+            $updated = $postService->update($id, $_POST);
+
+            if ($updated) {
+                Flash::set('success', 'Post updated');
+            } else {
+                Flash::set('error', 'Failed to update post');
+            }
+
+            $this->redirect('?route=posts');
+        } catch (\Exception $e) {
+            Flash::set('error', $e->getMessage());
         }
-
-        $errors = PostValidator::validate($_POST);
-
-        if (!empty($errors)) {
-            Flash::set('error', $errors[0]);
-            return $this->redirect('?route=posts/create');
-        }
-
-        $postService = new PostService();
-        $updated = $postService->update($_POST);
-
-        if ($updated) {
-            Flash::set('success', 'Post updated');
-        } else {
-            Flash::set('error', 'Failed to update post');
-        }
-
-        $this->redirect('?route=posts');
-
-        exit;
     }
 
     public function delete()
     {
-        AuthMiddleware::handle();
+        try {
+            AuthMiddleware::handle();
 
-        $postService = new PostService();
-        $deleted = $postService->delete();
+            $id = (int) Request::get('id');
 
-        if ($deleted) {
-            Flash::set('success', 'Post deleted');
-        } else {
-            Flash::set('error', 'Failed to delete post');
+            if (!$id) {
+                throw new \Exception('Post ID is required');
+            }
+
+            $postService = new PostService();
+            $deleted = $postService->delete($id);
+
+            if ($deleted) {
+                Flash::set('success', 'Post deleted');
+            } else {
+                Flash::set('error', 'Failed to delete post');
+            }
+
+            $this->redirect('?route=posts');
+        } catch (\Exception $e) {
+            Flash::set('error', $e->getMessage());
         }
-
-        $this->redirect('?route=posts');
-
-        exit;
     }
 }

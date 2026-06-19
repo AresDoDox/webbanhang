@@ -7,6 +7,7 @@ use App\Helpers\Csrf;
 use App\Helpers\Flash;
 use App\Services\ProductService;
 use App\Validators\ProductValidator;
+use App\Helpers\Request;
 
 class ProductController extends Controller
 {
@@ -27,8 +28,14 @@ class ProductController extends Controller
     {
         AdminMiddleware::handle();
 
+        $id = (int) Request::get('id');
+
+        if (!$id) {
+            throw new \Exception('Product ID is required');
+        }
+
         $productService = new ProductService();
-        $product = $productService->show();
+        $product = $productService->show($id);
 
         $this->view(
             'admin/products/show',
@@ -50,7 +57,7 @@ class ProductController extends Controller
         AdminMiddleware::handle();
 
         if (!Csrf::verify($_POST['csrf'] ?? '')) {
-            die('Invalid CSRF');
+            throw new \Exception('Invalid CSRF');
         }
 
         $errors = ProductValidator::validate($_POST);
@@ -76,8 +83,14 @@ class ProductController extends Controller
     {
         AdminMiddleware::handle();
 
+        $id = (int) Request::get('id');
+
+        if (!$id) {
+            throw new \Exception('Product ID is required');
+        }
+
         $productService = new ProductService();
-        $product = $productService->show();
+        $product = $productService->show($id);
 
         $this->view(
             'admin/products/edit',
@@ -89,10 +102,16 @@ class ProductController extends Controller
     {
         AdminMiddleware::handle();
 
+        $id = (int) Request::post('id');
+
+        if (!$id) {
+            throw new \Exception('Product ID is required');
+        }
+
         if (
             !Csrf::verify($_POST['csrf'] ?? '')
         ) {
-            die('Invalid CSRF');
+            throw new \Exception('Invalid CSRF');
         }
 
         $errors = ProductValidator::validate($_POST);
@@ -103,7 +122,7 @@ class ProductController extends Controller
         }
 
         $productService = new ProductService();
-        $updated = $productService->update($_POST, $_FILES['image']);
+        $updated = $productService->update($id, $_POST, $_FILES['image']);
 
         if ($updated) {
             Flash::set('success', 'Product updated');
@@ -120,8 +139,14 @@ class ProductController extends Controller
     {
         AdminMiddleware::handle();
 
+        $id = (int) Request::get('id');
+
+        if (!$id) {
+            throw new \Exception('Product ID is required');
+        }
+
         $productService = new ProductService();
-        $deleted = $productService->delete();
+        $deleted = $productService->delete($id);
 
         if ($deleted) {
             Flash::set('success', 'Product deleted');
