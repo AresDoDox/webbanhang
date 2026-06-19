@@ -33,6 +33,6 @@ class UserService
 
     public function findUser(int $id)
     {
-        return $this->userModel->findById($id);
+        return $this->userModel->find($id);
     }
 }

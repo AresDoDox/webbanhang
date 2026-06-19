@@ -17,12 +17,8 @@ class Controller
     protected function redirect(
         string $url
     ): void {
-        if (str_starts_with($url, '/')) {
-            $url = substr($url, 7);
-        }
-
         if (!preg_match('#^https?://#i', $url)) {
-            $url = BASE_PATH . '/' . ltrim($url, '/');
+            $url = BASE_PATH . rtrim($url, '/');
         }
 
         header("Location: $url");
