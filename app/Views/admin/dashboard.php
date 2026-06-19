@@ -8,25 +8,23 @@
 
 <div class="grid grid-cols-3 gap-4">
 
-    <div class="bg-white p-6 rounded shadow">
-
-        Users
-
-    </div>
-
-    <a href="?route=admin/products">
+    <a href="?route=admin/users">
         <div class="bg-white p-6 rounded shadow">
-
-            Products
-
+            Users
         </div>
     </a>
 
-    <div class="bg-white p-6 rounded shadow">
+    <a href="?route=admin/products">
+        <div class="bg-white p-6 rounded shadow">
+            Products
+        </div>
+    </a>
 
-        Orders
-
-    </div>
+    <a href="?route=posts">
+        <div class="bg-white p-6 rounded shadow">
+            Posts
+        </div>
+    </a>
 
 </div>
 

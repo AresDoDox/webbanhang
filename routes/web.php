@@ -6,6 +6,7 @@ use App\Controllers\UserController;
 use App\Controllers\AdminController;
 use App\Controllers\ProductController;
 use App\Controllers\PostController;
+use App\Controllers\AdminUserController;
 
 $route = $_GET['route'] ?? '/';
 switch ($route) {
@@ -82,6 +83,11 @@ switch ($route) {
     case 'admin/products/delete':
         $productController = new ProductController();
         $productController->delete();
+        break;
+
+    case 'admin/users':
+        $adminUserController = new AdminUserController();
+        $adminUserController->index();
         break;
 
     case 'posts':
