@@ -79,7 +79,6 @@ class Post extends Model
     {
         $query = "UPDATE posts
             SET
-            user_id = :user_id,
             title = :title,
             content = :content
         WHERE id = :id

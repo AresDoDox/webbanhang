@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\Post;
-use App\Helpers\Request;
 use App\Policies\PostPolicy;
 
 class PostService
@@ -29,14 +28,8 @@ class PostService
         return $posts;
     }
 
-    public function show()
+    public function show(int $id)
     {
-        $id = (int) Request::get('id');
-
-        if (!$id) {
-            die('Post ID is required');
-        }
-
         $post = $this->postModel->findOrFail($id);
 
         return $post;
@@ -56,26 +49,18 @@ class PostService
     }
 
     public function update(
+        int $id,
         array $data
     ) {
-        $id = (int) Request::post('id');
-
-        if (!$id) {
-            die('Post ID is required');
-        }
-
         $post = $this->postModel->findOrFail($id);
 
         if (!PostPolicy::owns($post)) {
             http_response_code(403);
 
-            die('Forbidden');
+            throw new \Exception('Forbidden');
         }
 
-        $userId = $_SESSION['user']['id'];
-
         $updateData = [
-            'user_id' => $userId,
             'title'        => $data['title'] ?? '',
             'content' => $data['content'] ?? ''
         ];
@@ -83,20 +68,14 @@ class PostService
         return $this->postModel->update($id, $updateData);
     }
 
-    public function delete()
+    public function delete(int $id)
     {
-        $id = (int) Request::get('id');
-
-        if (!$id) {
-            die('Product ID is required');
-        }
-
         $post = $this->postModel->findOrFail($id);
 
         if (!PostPolicy::owns($post)) {
             http_response_code(403);
 
-            die('Forbidden');
+            throw new \Exception('Forbidden');
         }
 
         return $this->postModel->delete($id);

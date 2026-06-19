@@ -2,14 +2,12 @@
 
 namespace App\Policies;
 
-use App\Enums\Role;
-
-class PostPolicy
+class PostPolicy extends Policy
 {
     public static function owns(
         array $post
     ): bool {
-        if ($_SESSION['user']['role'] === Role::ADMIN->value) {
+        if (static::isAdmin()) {
             return true;
         }
 
