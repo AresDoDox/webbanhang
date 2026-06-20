@@ -10,18 +10,20 @@ class AdminUserController extends Controller
 {
     public function index()
     {
-        AdminMiddleware::handle();
+        $this->safe(function () {
+            AdminMiddleware::handle();
 
-        $keyword = trim(Request::get('keyword', ''));
-        $page = (int) Request::get('page', 1);
-        $limit   = 10;
+            $keyword = trim(Request::get('keyword', ''));
+            $page = (int) Request::get('page', 1);
+            $limit   = 10;
 
-        $userService = new UserService();
-        $result = $userService->getUsers($page, $limit, $keyword);
+            $userService = new UserService();
+            $result = $userService->getUsers($page, $limit, $keyword);
 
-        $this->view(
-            'admin/users/index',
-            compact('result')
-        );
+            $this->view(
+                'admin/users/index',
+                compact('result')
+            );
+        }, 'admin/users');
     }
 }

@@ -13,141 +13,147 @@ class ProductController extends Controller
 {
     public function index()
     {
-        AdminMiddleware::handle();
+        $this->safe(function () {
+            AdminMiddleware::handle();
 
-        $productService = new ProductService();
-        $result = $productService->getAll();
+            $productService = new ProductService();
+            $result = $productService->getAll();
 
-        $this->view(
-            'admin/products/index',
-            compact('result')
-        );
+            $this->view(
+                'admin/products/index',
+                compact('result')
+            );
+        }, '/admin/products');
     }
 
     public function show(int $id)
     {
-        AdminMiddleware::handle();
+        $this->safe(function () use ($id) {
+            AdminMiddleware::handle();
 
-        if (!$id) {
-            throw new \Exception('Product ID is required');
-        }
+            if (!$id) {
+                throw new \Exception('Product ID is required');
+            }
 
-        $productService = new ProductService();
-        $product = $productService->show($id);
+            $productService = new ProductService();
+            $product = $productService->show($id);
 
-        $this->view(
-            'admin/products/show',
-            compact('product')
-        );
+            $this->view(
+                'admin/products/show',
+                compact('product')
+            );
+        }, '/admin/products');
     }
 
     public function create()
     {
-        AdminMiddleware::handle();
+        $this->safe(function () {
+            AdminMiddleware::handle();
 
-        $this->view(
-            'admin/products/create'
-        );
+            $this->view(
+                'admin/products/create'
+            );
+        }, '/admin/products');
     }
 
     public function store()
     {
-        AdminMiddleware::handle();
+        $this->safe(function () {
+            AdminMiddleware::handle();
 
-        if (!Csrf::verify($_POST['csrf'] ?? '')) {
-            throw new \Exception('Invalid CSRF');
-        }
+            if (!Csrf::verify($_POST['csrf'] ?? '')) {
+                throw new \Exception('Invalid CSRF');
+            }
 
-        $errors = ProductValidator::validate($_POST);
+            $errors = ProductValidator::validate($_POST);
 
-        if (!empty($errors)) {
-            Flash::set('error', $errors[0]);
-            return $this->redirect('/admin/products/create');
-        }
+            if (!empty($errors)) {
+                Flash::set('error', $errors[0]);
+                return $this->redirect('/admin/products/create');
+            }
 
-        $productService = new ProductService();
-        $productService->create($_POST, $_FILES['image']);
+            $productService = new ProductService();
+            $productService->create($_POST, $_FILES['image']);
 
-        // if ($created) {
-        //     Flash::set('success', 'Product created');
-        // } else {
-        //     Flash::set('error', 'Failed to create product');
-        // }
-
-        $this->redirect('/admin/products');
+            $this->redirect('/admin/products');
+        }, '/admin/products/create');
     }
 
     public function edit(int $id)
     {
-        AdminMiddleware::handle();
+        $this->safe(function () use ($id) {
+            AdminMiddleware::handle();
 
-        if (!$id) {
-            throw new \Exception('Product ID is required');
-        }
+            if (!$id) {
+                throw new \Exception('Product ID is required');
+            }
 
-        $productService = new ProductService();
-        $product = $productService->show($id);
+            $productService = new ProductService();
+            $product = $productService->show($id);
 
-        $this->view(
-            'admin/products/edit',
-            compact('product')
-        );
+            $this->view(
+                'admin/products/edit',
+                compact('product')
+            );
+        }, '/admin/products');
     }
 
     public function update()
     {
-        AdminMiddleware::handle();
-
         $id = (int) Request::post('id');
 
-        if (!$id) {
-            throw new \Exception('Product ID is required');
-        }
+        $this->safe(function () use ($id) {
+            AdminMiddleware::handle();
 
-        if (
-            !Csrf::verify($_POST['csrf'] ?? '')
-        ) {
-            throw new \Exception('Invalid CSRF');
-        }
+            if (!$id) {
+                throw new \Exception('Product ID is required');
+            }
 
-        $errors = ProductValidator::validate($_POST);
+            if (
+                !Csrf::verify($_POST['csrf'] ?? '')
+            ) {
+                throw new \Exception('Invalid CSRF');
+            }
 
-        if (!empty($errors)) {
-            Flash::set('error', $errors[0]);
-            return $this->redirect("/admin/products/edit/{$id}");
-        }
+            $errors = ProductValidator::validate($_POST);
 
-        $productService = new ProductService();
-        $updated = $productService->update($id, $_POST, $_FILES['image']);
+            if (!empty($errors)) {
+                Flash::set('error', $errors[0]);
+                return $this->redirect("/admin/products/edit/{$id}");
+            }
 
-        if ($updated) {
-            Flash::set('success', 'Product updated');
-        } else {
-            Flash::set('error', 'Failed to update product');
-        }
+            $productService = new ProductService();
+            $updated = $productService->update($id, $_POST, $_FILES['image']);
 
-        $this->redirect('/admin/products');
+            if ($updated) {
+                Flash::set('success', 'Product updated');
+            } else {
+                Flash::set('error', 'Failed to update product');
+            }
+
+            $this->redirect('/admin/products');
+        }, "/admin/products/edit/{$id}");
     }
 
     public function delete(int $id)
     {
-        AdminMiddleware::handle();
+        $this->safe(function () use ($id) {
+            AdminMiddleware::handle();
 
-        if (!$id) {
-            throw new \Exception('Product ID is required');
-        }
+            if (!$id) {
+                throw new \Exception('Product ID is required');
+            }
 
-        $productService = new ProductService();
-        $deleted = $productService->delete($id);
+            $productService = new ProductService();
+            $deleted = $productService->delete($id);
 
-        if ($deleted) {
-            Flash::set('success', 'Product deleted');
-        } else {
-            Flash::set('error', 'Failed to delete product');
-        }
+            if ($deleted) {
+                Flash::set('success', 'Product deleted');
+            } else {
+                Flash::set('error', 'Failed to delete product');
+            }
 
-        $this->redirect('/admin/products');
-
-        exit;
+            $this->redirect('/admin/products');
+        }, '/admin/products');
     }
 }
