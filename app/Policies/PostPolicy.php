@@ -2,6 +2,8 @@
 
 namespace App\Policies;
 
+use App\Helpers\Session;
+
 class PostPolicy extends Policy
 {
     public static function owns(
@@ -11,6 +13,7 @@ class PostPolicy extends Policy
             return true;
         }
 
-        return $post['user_id'] == $_SESSION['user']['id'];
+        $user = Session::get('user');
+        return $post['user_id'] == $user['id'];
     }
 }

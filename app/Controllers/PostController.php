@@ -9,6 +9,7 @@ use App\Services\PostService;
 use App\Validators\PostValidator;
 use App\Enums\Role;
 use App\Helpers\Request;
+use App\Helpers\Session;
 
 class PostController extends Controller
 {
@@ -19,7 +20,9 @@ class PostController extends Controller
             AuthMiddleware::handle();
 
             $postService = new PostService();
-            if ($_SESSION['user']['role'] === Role::ADMIN->value) {
+            $user = Session::get('user');
+
+            if ($user['role'] === Role::ADMIN->value) {
                 $posts = $postService->getAll();
             } else {
                 $posts = $postService->getByUser();

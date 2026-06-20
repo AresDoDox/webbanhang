@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Post;
 use App\Policies\PostPolicy;
+use App\Helpers\Session;
 
 class PostService
 {
@@ -22,7 +23,8 @@ class PostService
 
     public function getByUser()
     {
-        $userId = $_SESSION['user']['id'];
+        $user = Session::get('user');
+        $userId = $user['id'];
 
         $posts = $this->postModel->getByUser($userId);
         return $posts;
@@ -37,7 +39,8 @@ class PostService
 
     public function create(array $data)
     {
-        $userId = $_SESSION['user']['id'];
+        $user = Session::get('user');
+        $userId = $user['id'];
 
         $this->postModel->create([
             'user_id' => $userId,

@@ -3,14 +3,15 @@
 namespace App\Policies;
 
 use App\Enums\Role;
+use App\Helpers\Session;
 
 class UserPolicy extends Policy
 {
     public static function canDelete(
         array $targetUser
     ): bool {
-        return
-            $_SESSION['user']['id'] != $targetUser['id'];
+        $user = Session::get('user');
+        return $user['id'] != $targetUser['id'];
     }
 
     public static function canChangeRole(
