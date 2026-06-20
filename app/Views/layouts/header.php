@@ -6,7 +6,7 @@
 
     <title>PHP Project</title>
 
-    <link rel="stylesheet" href="/webbanhang/public/assets/css/app.css">
+    <link rel="stylesheet" href="<?= BASE_PATH ?>/assets/css/app.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
