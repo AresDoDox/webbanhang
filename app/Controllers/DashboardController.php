@@ -9,13 +9,15 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        AdminMiddleware::handle();
+        $this->safe(function () {
+            AdminMiddleware::handle();
 
-        $stats = (new DashboardService())->getDataChart();
+            $stats = (new DashboardService())->getDataChart();
 
-        $this->view(
-            'admin/dashboard/index',
-            compact('stats')
-        );
+            $this->view(
+                'admin/dashboard/index',
+                compact('stats')
+            );
+        }, '/admin/dashboard');
     }
 }

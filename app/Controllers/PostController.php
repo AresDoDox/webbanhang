@@ -15,7 +15,7 @@ class PostController extends Controller
     // get list
     public function index()
     {
-        try {
+        $this->safe(function () {
             AuthMiddleware::handle();
 
             $postService = new PostService();
@@ -29,14 +29,12 @@ class PostController extends Controller
                 'user/posts/index',
                 compact('posts')
             );
-        } catch (\Exception $e) {
-            Flash::set('error', $e->getMessage());
-        }
+        }, '/posts');
     }
 
     public function show(int $id)
     {
-        try {
+        $this->safe(function () use ($id) {
             AuthMiddleware::handle();
 
             if (!$id) {
@@ -50,27 +48,23 @@ class PostController extends Controller
                 'user/posts/show',
                 compact('post')
             );
-        } catch (\Exception $e) {
-            Flash::set('error', $e->getMessage());
-        }
+        }, '/posts');
     }
 
     public function create()
     {
-        try {
+        $this->safe(function () {
             AuthMiddleware::handle();
 
             $this->view(
                 'user/posts/create'
             );
-        } catch (\Exception $e) {
-            Flash::set('error', $e->getMessage());
-        }
+        }, '/posts');
     }
 
     public function store()
     {
-        try {
+        $this->safe(function () {
             AuthMiddleware::handle();
 
             if (!Csrf::verify($_POST['csrf'] ?? '')) {
@@ -88,14 +82,12 @@ class PostController extends Controller
             $postService->create($_POST);
 
             $this->redirect('/posts');
-        } catch (\Exception $e) {
-            Flash::set('error', $e->getMessage());
-        }
+        }, '/posts/create');
     }
 
     public function edit(int $id)
     {
-        try {
+        $this->safe(function () use ($id) {
             AuthMiddleware::handle();
 
             if (!$id) {
@@ -109,17 +101,15 @@ class PostController extends Controller
                 'user/posts/edit',
                 compact('post')
             );
-        } catch (\Exception $e) {
-            Flash::set('error', $e->getMessage());
-        }
+        }, '/posts');
     }
 
     public function update()
     {
-        try {
-            AuthMiddleware::handle();
+        $id = (int) Request::post('id');
 
-            $id = (int) Request::post('id');
+        $this->safe(function () use ($id) {
+            AuthMiddleware::handle();
 
             if (!$id) {
                 throw new \Exception('Post ID is required');
@@ -148,14 +138,12 @@ class PostController extends Controller
             }
 
             $this->redirect('/posts');
-        } catch (\Exception $e) {
-            Flash::set('error', $e->getMessage());
-        }
+        }, "/posts/edit/{$id}");
     }
 
     public function delete(int $id)
     {
-        try {
+        $this->safe(function () use ($id) {
             AuthMiddleware::handle();
 
             if (!$id) {
@@ -172,8 +160,6 @@ class PostController extends Controller
             }
 
             $this->redirect('/posts');
-        } catch (\Exception $e) {
-            Flash::set('error', $e->getMessage());
-        }
+        }, '/posts');
     }
 }

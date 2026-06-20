@@ -11,8 +11,6 @@ class UserController extends Controller
     {
         AuthMiddleware::handle();
 
-        $this->view(
-            'user/dashboard'
-        );
+        $this->view('user/dashboard');
     }
 }
