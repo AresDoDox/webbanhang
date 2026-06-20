@@ -2,11 +2,19 @@
 
 class Database
 {
-    private $host = "localhost";
-    private $db_name = "webbanhang";
-    private $username = "root";
-    private $password = "";
+    private string $host;
+    private string $db_name;
+    private string $username;
+    private string $password;
     public $conn;
+
+    public function __construct()
+    {
+        $this->host = getenv('DB_HOST') ?: 'localhost';
+        $this->db_name = getenv('DB_NAME') ?: 'webbanhang';
+        $this->username = getenv('DB_USER') ?: 'root';
+        $this->password = getenv('DB_PASS') ?: '';
+    }
 
     public function getConnection()
     {
