@@ -1,3 +1,10 @@
+<?php
+
+use App\Helpers\Session;
+
+$user = Session::get('user');
+?>
+
 <?php require '../app/Views/layouts/header.php'; ?>
 
 <div class="bg-white p-8 rounded shadow">
@@ -12,9 +19,7 @@
 
         Welcome
 
-        <?= htmlspecialchars(
-            $_SESSION['user']['name']
-        ) ?>
+        <?= htmlspecialchars($user['name']) ?>
 
     </p>
 

@@ -7,6 +7,7 @@ use App\Helpers\Csrf;
 use App\Helpers\Validator;
 use App\Helpers\Flash;
 use App\Middleware\GuestMiddleware;
+use App\Helpers\Session;
 
 class AuthController extends Controller
 {
@@ -72,7 +73,7 @@ class AuthController extends Controller
             $foundUser = $user->findByEmail($_POST['email'] ?? '');
 
             if ($foundUser && password_verify($_POST['password'], $foundUser['password'])) {
-                $_SESSION['user'] = $foundUser;
+                Session::set('user', $foundUser);
 
                 if ($foundUser['role'] === 'admin') {
                     $this->redirect('/admin/dashboard');

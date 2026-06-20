@@ -1,3 +1,10 @@
+<?php
+
+use App\Helpers\Session;
+use App\Enums\Role;
+
+$user = Session::get('user');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,15 +28,13 @@
 
             <div class="space-x-4">
 
-                <?php if (isset($_SESSION['user'])): ?>
+                <?php if (isset($user)): ?>
 
                     <span>
 
                         Hello,
 
-                        <?= htmlspecialchars(
-                            $_SESSION['user']['name']
-                        ) ?>
+                        <?= htmlspecialchars($user['name']) ?>
 
                     </span>
 
@@ -47,10 +52,7 @@
 
                     </a>
 
-                    <?php if (
-                        $_SESSION['user']['role']
-                        === 'admin'
-                    ): ?>
+                    <?php if ($user['role'] === Role::ADMIN->value): ?>
 
                         <a href="<?= BASE_PATH ?>/admin/dashboard">
 
